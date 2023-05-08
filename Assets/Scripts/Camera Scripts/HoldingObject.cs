@@ -11,6 +11,11 @@ public class HoldingObject : MonoBehaviour
     [SerializeField] private float PickupRange;
     private Rigidbody CurrentObject;
 
+    public float sensXY;
+
+    float xRotation;
+    float yRotation;
+
     void Start()
     {
 
@@ -40,10 +45,23 @@ public class HoldingObject : MonoBehaviour
     {
         if (CurrentObject)
         {
+            CurrentObject.freezeRotation = true;
             Vector3 DirectionToPoint = PickupTarget.position - CurrentObject.position;
             float DistancetoPoint = DirectionToPoint.magnitude;
 
             CurrentObject.velocity = DirectionToPoint * 12f * DistancetoPoint;
+            if (Input.GetMouseButton(1))
+            {
+                CurrentObject.freezeRotation = false;
+                float mouseX = Input.GetAxisRaw("Horizontal") / 5 * Time.deltaTime * sensXY;
+                float mouseY = Input.GetAxisRaw("Vertical") / 5 * Time.deltaTime * sensXY;
+
+                yRotation += mouseX;
+                xRotation -= mouseY;
+                Mathf.Clamp(xRotation, -90f, 90f);
+
+                CurrentObject.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            }
         }
     }
 }

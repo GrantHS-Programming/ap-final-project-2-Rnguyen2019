@@ -109,7 +109,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (!Input.GetMouseButton(1))
+        {
+            MovePlayer();
+        }
+        
     }
     private void MyInput()
     {

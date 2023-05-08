@@ -28,6 +28,8 @@ public class BananaSpawner : MonoBehaviour
     float timer = 0;
     public int numBananas = 0;
     public int bananaCapCount;
+    public int Xlength;
+    public int Zlength;
     private bool bananaCap = false;
     // Start is called before the first frame update
     void Start()
@@ -60,8 +62,8 @@ public class BananaSpawner : MonoBehaviour
     {
         if (!bananaCap)
         {
-            int randNum1 = Random.Range(-95, 95);
-            int randNum2 = Random.Range(-145, 145);
+            int randNum1 = Random.Range(-(Xlength / 2 - 5), Xlength / 2 - 5);
+            int randNum2 = Random.Range(-(Zlength / 2 - 5), Zlength / 2 - 5);
             GameObject bananaClone = Instantiate(bananaOriginal, new Vector3(randNum1, bananaOriginal.transform.position.y, randNum2), bananaOriginal.transform.rotation);
             numBananas++;
         }

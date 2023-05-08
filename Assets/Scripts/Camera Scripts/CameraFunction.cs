@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraFunction : MonoBehaviour
 {
     private bool cameraOn = false;
-    private bool moveMice = true;
     private Camera ZoomCamera;
 
     public float sensXY;
@@ -28,6 +27,8 @@ public class CameraFunction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
         if (!cameraOn)
         {
             if (Input.GetKeyDown(KeyCode.F))
@@ -53,26 +54,6 @@ public class CameraFunction : MonoBehaviour
                 }
         }
 
-        if (moveMice)
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                moveMice = false;
-            }
-        }
-        else if (!moveMice)
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = false;
-                moveMice = true;
-            }
-        }
-
-
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensXY;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensXY;
 
@@ -80,10 +61,7 @@ public class CameraFunction : MonoBehaviour
         xRotation -= mouseY;
         Mathf.Clamp(xRotation, -90f, 90f);
 
-        if (moveMice)
-        {
-            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-            orientation.rotation = Quaternion.Euler(0, yRotation, 0);
-        }
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 }
