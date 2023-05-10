@@ -16,6 +16,10 @@ public class HoldingObject : MonoBehaviour
     float xRotation;
     float yRotation;
 
+    public Transform orientation;
+
+    float timer = 1;
+
     void Start()
     {
 
@@ -27,6 +31,20 @@ public class HoldingObject : MonoBehaviour
         {
             if (CurrentObject)
             {
+                if (Input.GetMouseButton(2))
+                {
+                    timer += Time.deltaTime;
+                }
+                if (Input.GetMouseButtonUp(2))
+                {
+                    Debug.Log(timer);
+                    Vector3 moveDirection = orientation.forward * 10 + orientation.up * 2;
+                    Debug.Log("kys");
+                    CurrentObject.GetComponent<Rigidbody>().AddForce(moveDirection * (100 + timer), ForceMode.Force);
+                    CurrentObject.useGravity = true;
+                    CurrentObject = null;
+                    timer = 0;
+                }
                 CurrentObject.useGravity = true;
                 CurrentObject = null;
                 return;
@@ -46,13 +64,13 @@ public class HoldingObject : MonoBehaviour
         if (CurrentObject)
         {
             CurrentObject.freezeRotation = true;
+            CurrentObject.freezeRotation = false;
             Vector3 DirectionToPoint = PickupTarget.position - CurrentObject.position;
             float DistancetoPoint = DirectionToPoint.magnitude;
 
             CurrentObject.velocity = DirectionToPoint * 12f * DistancetoPoint;
             if (Input.GetMouseButton(1))
             {
-                CurrentObject.freezeRotation = false;
                 float mouseX = Input.GetAxisRaw("Horizontal") / 5 * Time.deltaTime * sensXY;
                 float mouseY = Input.GetAxisRaw("Vertical") / 5 * Time.deltaTime * sensXY;
 
