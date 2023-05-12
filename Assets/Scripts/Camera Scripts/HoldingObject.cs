@@ -18,7 +18,7 @@ public class HoldingObject : MonoBehaviour
 
     public Transform orientation;
 
-    float timer = 1;
+    float timer = 0;
 
     void Start()
     {
@@ -31,20 +31,6 @@ public class HoldingObject : MonoBehaviour
         {
             if (CurrentObject)
             {
-                if (Input.GetMouseButton(2))
-                {
-                    timer += Time.deltaTime;
-                }
-                if (Input.GetMouseButtonUp(2))
-                {
-                    Debug.Log(timer);
-                    Vector3 moveDirection = orientation.forward * 10 + orientation.up * 2;
-                    Debug.Log("kys");
-                    CurrentObject.GetComponent<Rigidbody>().AddForce(moveDirection * (100 + timer), ForceMode.Force);
-                    CurrentObject.useGravity = true;
-                    CurrentObject = null;
-                    timer = 0;
-                }
                 CurrentObject.useGravity = true;
                 CurrentObject = null;
                 return;
@@ -79,6 +65,28 @@ public class HoldingObject : MonoBehaviour
                 Mathf.Clamp(xRotation, -90f, 90f);
 
                 CurrentObject.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            }
+            if (Input.GetMouseButton(2))
+            {
+                timer += Time.deltaTime;
+                Debug.Log(timer);
+                if (timer >= 10)
+                {
+                    timer = 10;
+                }
+            }
+            if (!Input.GetMouseButton(2))
+            {
+                if (timer != 0)
+                {
+                    Vector3 moveDirection = orientation.forward * (10 + timer) + orientation.up * 2;
+                    Debug.Log("kys");
+                    CurrentObject.GetComponent<Rigidbody>().AddForce(moveDirection * 100, ForceMode.Force);
+                    CurrentObject.useGravity = true;
+                    CurrentObject = null;
+                    timer = 0;
+                }
+                
             }
         }
     }
