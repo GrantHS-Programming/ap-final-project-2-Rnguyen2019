@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     bool grounded;
+    bool doubleJump;
 
     public Transform orientation;
 
@@ -66,6 +67,10 @@ public class Player : MonoBehaviour
     {
 
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f);
+        if (grounded)
+        {
+            doubleJump = true;
+        }
 
         //Checks status of camera true/false
         if (!cameraOn)
@@ -119,8 +124,12 @@ public class Player : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump && (grounded || doubleJump))
         {
+            if (doubleJump)
+            {
+                doubleJump = false;
+            }
             readyToJump = false;
 
             Jump();
