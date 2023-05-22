@@ -3,7 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody rigidBodyComponent;
-    private bool cameraOn = false;
+    //public static bool cameraOn = false;
 
     //public CharacterController controller;
     [Header("Movement")]
@@ -65,32 +65,18 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool cameraOn = CameraFunction.cameraOn;
 
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight);
         if (grounded)
         {
             doubleJump = true;
         }
 
-        //Checks status of camera true/false
-        if (!cameraOn)
-        {
-            rigidBodyComponent.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
-            //make so fall slowly
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                cameraOn = true;
-            }
-        }
-
         if (cameraOn)
         {
             rigidBodyComponent.constraints = RigidbodyConstraints.FreezePosition;
-            //make so fall slowly
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                cameraOn = false;
-            }
+            rigidBodyComponent.constraints = RigidbodyConstraints.FreezeRotation;
         }
 
         if (!cameraOn)

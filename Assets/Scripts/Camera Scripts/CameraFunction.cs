@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFunction : MonoBehaviour
 {
-    private bool cameraOn = false;
+    public static bool cameraOn = false;
     private Camera ZoomCamera;
 
     public float sensXY;
