@@ -11,7 +11,7 @@ public class WhatIsInCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        camera = GameObject.Find("Test").GetComponent<Camera>();
+        camera = GameObject.Find("Second Camera").GetComponent<Camera>();
         renderer = GetComponent<MeshRenderer>();
         collider = GetComponent<Collider>();
     }
