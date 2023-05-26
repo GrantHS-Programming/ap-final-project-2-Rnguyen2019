@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraFunction : MonoBehaviour
 {
-    public static bool cameraOn = false;
     private Camera ZoomCamera;
 
     public float sensXY;
@@ -32,30 +31,13 @@ public class CameraFunction : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
-        if (!cameraOn)
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-                {
-                Camera.main.fieldOfView -= 10;
-                cameraOn = true;
-                }
-        }
 
         if (Camera.main.fieldOfView > 100)
         {
             Camera.main.fieldOfView = 100;
         }
 
-        if (cameraOn)
-        {
             Camera.main.fieldOfView += Input.GetAxis("Mouse ScrollWheel") * -15;
-
-        if (Input.GetKeyDown(KeyCode.G))
-                {
-                Camera.main.fieldOfView = 60;
-                cameraOn = false;
-                }
-        }
 
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensXY;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensXY;

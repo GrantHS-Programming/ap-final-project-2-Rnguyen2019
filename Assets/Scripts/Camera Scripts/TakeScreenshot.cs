@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class TakeScreenshot : MonoBehaviour
 {
     public GameObject picture;
-    Texture2D screenShotTexture;
     Rect rect1;
     Sprite photoSprite;
 
@@ -15,6 +14,7 @@ public class TakeScreenshot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        picture.GetComponent<Image>().sprite = null;
         mainUI = GameObject.Find("Main View UI");
     }
 
@@ -22,14 +22,13 @@ public class TakeScreenshot : MonoBehaviour
     private void Update()
     {
         mainUI.SetActive(true);
-        bool cameraOn = CameraFunction.cameraOn;
+        picture.SetActive(true);
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            if (cameraOn)
-            {                mainUI.SetActive(false);
-                StartCoroutine(CoroutineScreenshot());
-            }
+            mainUI.SetActive(false);
+            picture.SetActive(false);
+            StartCoroutine(CoroutineScreenshot());
         }
     }
 
@@ -40,17 +39,11 @@ public class TakeScreenshot : MonoBehaviour
         int width = (int)(Screen.width);
         int height = (int)(Screen.height);
         Texture2D screenShotTexture = new Texture2D(width, height, TextureFormat.ARGB32, false);
-        int pictureWidth = (int)picture.GetComponent<Image>().sprite.rect.width;
-        int wantWidth = Screen.width / pictureWidth * pictureWidth;
-        int pictureHeight = (int)picture.GetComponent<Image>().sprite.rect.height;
-        int wantHeight = Screen.height / pictureHeight * pictureHeight;
-        Texture2D newScreenShotTexture = screenShotTexture.GetPixels((Screen.width - wantWidth) / 2, Screen.width - ((Screen.width - wantWidth) / 2), (Screen.height - wantHeight) / 2, (Screen.height - (Screen.height - wantHeight) / 2));
         Rect rect = new Rect(0, 0, width, height);
         screenShotTexture.ReadPixels(rect, 0, 0);
         screenShotTexture.Apply();
 
-        byte[] byteArray = screenShotTexture.EncodeToPNG();
-        System.IO.File.WriteAllBytes(Application.dataPath + "/CameraScreenShot.png", byteArray);
+        picture.GetComponent<Image>().rectTransform.sizeDelta = new Vector2((width - 1) * 0.1f, (height - 1) * 0.1f);
 
         rect1 = new Rect(0, 0, screenShotTexture.width, screenShotTexture.height);
         photoSprite = Sprite.Create(screenShotTexture, rect1, new Vector2(0f, 0f));

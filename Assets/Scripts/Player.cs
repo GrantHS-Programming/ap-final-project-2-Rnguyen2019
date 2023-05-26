@@ -3,7 +3,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody rigidBodyComponent;
-    //public static bool cameraOn = false;
 
     //public CharacterController controller;
     [Header("Movement")]
@@ -65,25 +64,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool cameraOn = CameraFunction.cameraOn;
-
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight);
         if (grounded)
         {
             doubleJump = true;
         }
 
-        if (cameraOn)
-        {
-            rigidBodyComponent.constraints = RigidbodyConstraints.FreezePosition;
-            rigidBodyComponent.constraints = RigidbodyConstraints.FreezeRotation;
-        }
-
-        if (!cameraOn)
-        {
             MyInput();
             SpeedControl();
-        }
 
         if (grounded)
         {

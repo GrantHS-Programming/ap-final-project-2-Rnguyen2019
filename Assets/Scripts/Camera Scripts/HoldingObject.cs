@@ -69,7 +69,6 @@ public class HoldingObject : MonoBehaviour
             if (Input.GetMouseButton(2))
             {
                 timer += Time.deltaTime;
-                Debug.Log(timer);
                 if (timer >= 10)
                 {
                     timer = 10;
@@ -79,8 +78,7 @@ public class HoldingObject : MonoBehaviour
             {
                 if (timer != 0)
                 {
-                    Vector3 moveDirection = orientation.forward * (10 + timer) + orientation.up * 2;
-                    Debug.Log("kys");
+                    Vector3 moveDirection = orientation.forward * (10 + timer) + orientation.up * (2 + timer);
                     CurrentObject.GetComponent<Rigidbody>().AddForce(moveDirection * 100, ForceMode.Force);
                     CurrentObject.useGravity = true;
                     CurrentObject = null;
