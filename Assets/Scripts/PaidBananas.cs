@@ -5,6 +5,8 @@ using UnityEngine;
 public class PaidBananas : MonoBehaviour
 {
     public GameObject[] bounds;
+    private int level = 1;
+    private int paid;
 
     private bool mountains;
     private float mountainMultiplier;
@@ -15,8 +17,13 @@ public class PaidBananas : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public int bananaCalc()
+    {
+        paid = (int)(5 * mountainMultiplier * level);
+        return paid;
+    }
+
+    public void setMultiplier()
     {
         mountains = bounds[0].GetComponent<WhatIsInCamera>().inCamera;
         if (mountains)
@@ -27,15 +34,16 @@ public class PaidBananas : MonoBehaviour
         {
             mountainMultiplier = 1;
         }
-        int rand = Random.Range(1, 1);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        setMultiplier();
+        bananaCalc();
         if (Input.GetKeyDown(KeyCode.T))
         {
-            if (mountains)
-            {
-                rand *= 2;
-                Debug.Log("igoshe");
-            }
-            for (int i = 0; i < rand; i++)
+            for (int i = 0; i < paid; i++)
             {
                 Player.Instance.addBanana();
             }
