@@ -98,6 +98,7 @@ public class Player : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        //doubleJump = true;
         if (Input.GetKey(jumpKey) && readyToJump && (grounded || doubleJump))
         {
             if (doubleJump)
