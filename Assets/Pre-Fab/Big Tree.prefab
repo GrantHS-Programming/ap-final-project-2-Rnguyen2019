@@ -42,6 +42,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptimizedTree
       objectReference: {fileID: 0}
+    - target: {fileID: 6132978010646782222, guid: 80e41a2860a988747b9a40a49218fb1d, type: 3}
+      propertyPath: m_SelectedEditorRenderState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7723353219746163885, guid: 80e41a2860a988747b9a40a49218fb1d, type: 3}
       propertyPath: m_RootOrder
       value: 0

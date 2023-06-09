@@ -37,7 +37,7 @@ public class PaidBananas : MonoBehaviour
             mountainMultiplier = 1;
         }
 
-        trees = bounds[0].GetComponent<WhatIsInCamera>().inCamera;
+        trees = bounds[1].GetComponent<WhatIsInCamera>().inCamera;
         if (trees)
         {
             treesMultiplier = 1.2f;
@@ -57,9 +57,12 @@ public class PaidBananas : MonoBehaviour
         bananaCalc();
         if (Input.GetKeyDown(KeyCode.T))
         {
-            for (int i = 0; i < paid; i++)
+            if (TakeScreenshot.tookPhoto)
             {
-                Player.Instance.addBanana();
+                for (int i = 0; i < paid; i++)
+                {
+                    Player.Instance.addBanana();
+                }
             }
         }
     }
