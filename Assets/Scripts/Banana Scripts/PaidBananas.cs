@@ -51,13 +51,11 @@ public class PaidBananas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Mountain: " + mountainMultiplier);
-        Debug.Log("Tree: " + treesMultiplier);
         setMultiplier();
         bananaCalc();
         if (Input.GetKeyDown(KeyCode.T))
         {
-            if (TakeScreenshot.tookPhoto)
+            if (TakeScreenshot.timer > TakeScreenshot.cooldown)
             {
                 for (int i = 0; i < paid; i++)
                 {

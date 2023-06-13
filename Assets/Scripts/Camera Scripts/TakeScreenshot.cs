@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class TakeScreenshot : MonoBehaviour
 {
-    public float cooldown;
+    public static float cooldown = 5;
     public GameObject picture;
+    public GameObject onCooldown;
     Rect rect1;
     Sprite photoSprite;
-    private float timer = 100;
-    public static bool tookPhoto = false;
+    public static float timer = 100;
+    float timer2;
 
     GameObject mainUI;
 
@@ -19,26 +20,34 @@ public class TakeScreenshot : MonoBehaviour
     {
         picture.GetComponent<Image>().sprite = null;
         mainUI = GameObject.Find("Main View UI");
+        onCooldown.SetActive(false);
     }
 
     // Update is called once per frame
     private void Update()
     {
-        tookPhoto = false;
         timer += Time.deltaTime;
         mainUI.SetActive(true);
         picture.SetActive(true);
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            if (timer > cooldown)
+            if (timer >= cooldown)
             {
                 mainUI.SetActive(false);
                 picture.SetActive(false);
                 StartCoroutine(CoroutineScreenshot());
                 timer = 0;
-                tookPhoto = true;
             }
+            else
+            {
+                onCooldown.SetActive(true);
+                timer2 = timer;
+            }
+        }
+        if (timer >= 5)
+        {
+            onCooldown.SetActive(false);
         }
     }
 
